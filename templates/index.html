@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+
+{% block styles %}
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .row {
+            margin: 0 !important;
+        }
+
+        .full {
+            height: 100%
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row full">
+        <div class="col s6 blue full hoverable valign-wrapper center">
+            <div>
+                <a href="add">
+                    <h4 class="white-text valign">Add Caps</h4>
+                </a>
+            </div>
+        </div>
+        <div class="col s6 teal full hoverable valign-wrapper">
+            <div style="display: block" >
+                <a href="cappr">
+                <h4 class="white-text valign">Cappr</h4>
+            </a></div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Start of Required Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- End of Required Meta Tags -->
+    {% load static from staticfiles %}
+
+    <!-- Start of Meta Tags -->
+    <title>New Era Caps</title>
+    <!-- End of Meta Tags -->
+
+    <!-- Start of Styling -->
+
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+    <link href="//cdn.bri.io/mbox/dist/mbox-0.0.1.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {% block styles %}{% endblock %}
+    <!-- End of Styling -->
+</head>
+<body>
+<div class="row">
+    <div class="navbar-fixed">
+        <nav class="white black-text">
+            <div class="nav-wrapper black-text">
+                <a href="#" class="brand-logo center black-text">{{title}}</a>
+                <ul class="left">
+                    <li>
+                        <a class="black-text on-hover-inherit" href="{% url 'cappr:index' %}">
+                            <img class="brand-logo" src="{% static 'assets/logo.png' %}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+
+
+{% block content %}{% endblock %}
+{#<!-- End of Page Content -->#}
+
+<!-- Start of Scripts -->
+<script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+<script src="{% static 'js/materialize.min.js' %}"></script>
+<script src="//cdn.bri.io/mbox/dist/mbox-0.0.1.min.js"></script>
+
+{% block scripts %}{% endblock %}
+<!-- End of Scripts -->
+</body>
+</html>

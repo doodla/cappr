@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700");
+html {
+  font-family: Lato, sans-serif; }
+
+.brand-logo {
+  vertical-align: middle;
+  cursor: pointer; }
+
+/*# sourceMappingURL=layout.css.map */

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% load static from staticfiles %}
+{% load helper_tags %}
+{% block styles %}
+
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+
+            {% for cap in caps %}
+
+                <div class="col s6 m3">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ cap.picture }}">
+                        </div>
+                        <div class="card-content">
+                            <p>{{ cap.name }}</p></div>
+                        <div class="card-action">
+                            <a target="_blank" href="{{ cap.url }}">Buy Now</a>
+                            <a target="_blank" class="right" href="{{ cap.url }}">${{ cap.price|cost_to_usd }}</a>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
