@@ -1,6 +1,6 @@
 from django.db.models import Case
 from django.db.models import When
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from webcolors import hex_to_rgb
 
 from .lib.utils import *
@@ -99,3 +99,7 @@ def cappr_view(request):
     caps = Cap.objects.filter(pk__in=order).order_by(preserved)
 
     return render(request, 'cappr_view.html', {'title': 'Cappr', 'caps': caps})
+
+
+def cappr_redirect(request):
+    return redirect('cappr:image')

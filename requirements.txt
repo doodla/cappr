@@ -3,3 +3,4 @@ requests
 webcolors
 pyimgur
 colormath
+Pillow
