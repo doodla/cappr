@@ -77,8 +77,6 @@ def find_middle_point(x, y, a, b):
 def change_cap_width(width):
     im = Image.open(path_to_cap)
 
-    print(im.size)
-
     old_width, old_height = im.size
 
     ratio = float(width) / float(old_width)
@@ -90,8 +88,6 @@ def change_cap_width(width):
     im.thumbnail((new_width, new_height), Image.LANCZOS)
 
     im.save(resize_path)
-
-    print(im.size)
 
 
 def rotate_cap(angle):

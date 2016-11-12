@@ -95,13 +95,18 @@ def upload_to_imgur(imgData):
     return data['link']
 
 
-def get_accent_color_and_emotion(imgur_link):
+def get_accent_color_and_emotion(imgur_link,file=None):
     params = {'visualFeatures': 'Color,Categories'}
 
-    headers = {'Ocp-Apim-Subscription-Key': _key_accent, 'Content-Type': 'application/json'}
 
-    json = {'url': imgur_link}
-    data = None
+    if file is None:
+        headers = {'Ocp-Apim-Subscription-Key': _key_accent, 'Content-Type': 'application/json'}
+        json = {'url': imgur_link}
+        data = None
+    else:
+        headers = {'Ocp-Apim-Subscription-Key': _key_accent, 'Content-Type': 'application/octet-stream'}
+        json = None
+        data = file
 
     result = process_request(json, data, headers, params, _url_accent)
 

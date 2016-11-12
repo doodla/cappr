@@ -108,10 +108,39 @@ def cappr_view(request):
         if current_emotion in cap.emotion:
             cap_list.append(cap)
 
-
     get_merged_image()
     return render(request, 'cappr_view.html', {'title': 'Cappr', 'caps': cap_list})
 
 
 def cappr_redirect(request):
     return redirect('cappr:image')
+
+
+def cappr_upload(request):
+    file = request.FILES['pic']
+
+    with open('media/user.png', 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+
+    with open('media/user.png', 'rb') as f:
+        data = f.read()
+
+    hex_accent_color, current_emotion = get_accent_color_and_emotion('', data)
+
+    r, g, b = hex_to_rgb(hex_accent_color)
+    rgb_accent_color = '{},{},{}'.format(r, g, b)
+
+    order = return_top_matches(rgb_accent_color, 2)
+
+    preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(order)])
+    caps = Cap.objects.filter(pk__in=order).order_by(preserved)
+
+    cap_list = []
+    for cap in caps:
+
+        if current_emotion in cap.emotion:
+            cap_list.append(cap)
+
+    get_merged_image()
+    return render(request, 'cappr_view.html', {'title': 'Cappr', 'caps': cap_list})
