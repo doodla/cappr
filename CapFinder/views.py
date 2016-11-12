@@ -20,7 +20,7 @@ def add_caps(request):
         picture = request.POST.get('picture')
         url = request.POST.get('url')
         price = request.POST.get('price')
-        emotion = request.POST.get('emotion')
+        emotion = request.POST.getlist('emotion[]')
 
         params = {'visualFeatures': 'Color,Categories'}
 
