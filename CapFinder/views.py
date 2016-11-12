@@ -3,6 +3,7 @@ from django.db.models import When
 from django.shortcuts import render, redirect
 from webcolors import hex_to_rgb
 
+from CapFinder.lib.pilow import get_merged_image
 from .lib.utils import *
 
 _key_accent = '00ddd41708ea42b2b6afdc73b574d2d7'
@@ -86,6 +87,9 @@ def cappr_image(request):
 def cappr_view(request):
     imgData = request.POST.get('image')
 
+    with open("media/user.png", "wb") as fh:
+        fh.write(imgData.decode('base64'))
+
     imgur_link = upload_to_imgur(imgData)
 
     hex_accent_color, current_emotion = get_accent_color_and_emotion(imgur_link)
@@ -98,6 +102,7 @@ def cappr_view(request):
     preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(order)])
     caps = Cap.objects.filter(pk__in=order).order_by(preserved)
 
+    get_merged_image()
     return render(request, 'cappr_view.html', {'title': 'Cappr', 'caps': caps})
 
 
