@@ -50,10 +50,12 @@
                               method="post">
                             {% csrf_token %}
                             <div class="file-field input-field">
-                                <a href="#" class="btn left orange darken-3" id="upload"><i
+                                <a href="#" onclick="e.preventDefault();" class="btn left orange darken-3"
+                                   id="upload"><i
                                         class="material-icons">file_upload</i> upload
                                     <input id="fileUpload" type="file" name="pic">
                                 </a>
+
                             </div>
                         </form>
 
