@@ -3,6 +3,13 @@
 {% load helper_tags %}
 {% block styles %}
 
+    <style>
+    .modal{
+        width: 80%;
+        height:90%;
+    }
+
+    </style>
 
 {% endblock %}
 
@@ -32,9 +39,31 @@
 
     </div>
 
+    <div id="pictureModal" class="modal">
+        <div class="modal-content">
+
+            <img src="/media/merged.png" class="materialboxed" alt="">
+
+        </div>
+    </div>
+
 
 {% endblock %}
 
 {% block scripts %}
 
+    <script>
+
+        $(document).ready(function () {
+            $('.modal').modal();
+
+
+            $(".card-image").click(function () {
+
+                $("#pictureModal").modal('open')
+
+            })
+
+        })
+    </script>
 {% endblock %}
