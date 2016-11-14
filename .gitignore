@@ -4,5 +4,7 @@ media/merged.png
 media/resize.png
 media/rotate.png
 media/user.png
-CapFinder/*.pyc
 *.pyc
+Cappr/settings/templates
+Cappr/settings/dev-sqlite.py
+Cappr/settings/dev-postgres.py

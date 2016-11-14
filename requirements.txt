@@ -4,3 +4,9 @@ webcolors
 pyimgur
 colormath
 Pillow
+gunicorn
+psycopg2
+django_compressor
+djangorestframework
+markdown
+django-filter

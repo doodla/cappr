@@ -14,15 +14,26 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'x+m*8luq$kud&gv@n@sf)o_0_+sb92(y&qxk(x&ryii3qc0sv%'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+ENVIRONMENT = {
+    # If postgres database
+    'pg_database': os.getenv("PG_DATABASE", "capprdb"),
+    'pg_user': os.getenv("PG_USER", "newera"),
+    'pg_password': os.getenv("PG_PASSWORD", "popuqoow"),
+    'pg_host': os.getenv("PG_HOST", "localhost"),
+    'pg_port': os.getenv("PG_PORT", ""),
+    # For the whole program
+    'secret': os.getenv("SECRET_KEY", 'x+m*8luq$kud&gv@n@sf)o_0_+sb92(y&qxk(x&ryii3qc0sv%'),
+    'project': "Cappr",
+}
+
+SECRET_KEY = ENVIRONMENT['secret']
 
 ALLOWED_HOSTS = ['*']
 
@@ -115,7 +126,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'static/'),
+    os.path.join(BASE_DIR, 'static/'),
 )
 
 MEDIA_URL = '/media/'
