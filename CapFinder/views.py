@@ -1,3 +1,5 @@
+import base64
+
 from django.db.models import Case
 from django.db.models import When
 from django.shortcuts import render, redirect
@@ -88,7 +90,7 @@ def cappr_view(request):
     imgData = request.POST.get('image')
 
     with open("media/user.png", "wb") as fh:
-        fh.write(imgData.decode('base64'))
+        fh.write(base64.decodestring(imgData))
 
     imgur_link = upload_to_imgur(imgData)
 
