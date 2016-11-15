@@ -89,8 +89,6 @@ def cappr_image(request):
 def cappr_view(request):
     img_data = request.POST.get('image')
 
-    img_data.encode()
-
     with open("media/user.png", "wb") as fh:
         fh.write(decodebytes(img_data.encode()))
 
