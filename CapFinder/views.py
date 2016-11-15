@@ -1,4 +1,4 @@
-import base64
+from base64 import decodebytes
 
 from django.db.models import Case
 from django.db.models import When
@@ -28,10 +28,10 @@ def add_caps(request):
 
         headers = {'Ocp-Apim-Subscription-Key': _key_accent, 'Content-Type': 'application/json'}
 
-        json = {'url': picture}
+        _json = {'url': picture}
         data = None
 
-        result = process_request(json, data, headers, params, _url_accent)
+        result = process_request(_json, data, headers, params, _url_accent)
 
         dominant_color = result['color']['dominantColorForeground']
         background_color = result['color']['dominantColorBackground']
@@ -87,12 +87,12 @@ def cappr_image(request):
 
 
 def cappr_view(request):
-    imgData = request.POST.get('image')
+    img_data = request.POST.get('image')
 
     with open("media/user.png", "wb") as fh:
-        fh.write(base64.decodestring(imgData))
+        fh.write(decodebytes(bytes(img_data, 'utf-8')))
 
-    imgur_link = upload_to_imgur(imgData)
+    imgur_link = upload_to_imgur(img_data)
 
     hex_accent_color, current_emotion = get_accent_color_and_emotion(imgur_link)
 
