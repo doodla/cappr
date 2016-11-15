@@ -89,8 +89,10 @@ def cappr_image(request):
 def cappr_view(request):
     img_data = request.POST.get('image')
 
+    img_data.encode()
+
     with open("media/user.png", "wb") as fh:
-        fh.write(decodebytes(bytes(img_data, 'utf-8')))
+        fh.write(decodebytes(img_data.encode()))
 
     imgur_link = upload_to_imgur(img_data)
 
