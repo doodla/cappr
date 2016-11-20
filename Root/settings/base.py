@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Because our settings are in an additional directory
 BASE_DIR = os.path.dirname(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
@@ -24,11 +25,10 @@ BASE_DIR = os.path.dirname(BASE_DIR)
 ENVIRONMENT = {
     # If postgres database
     'pg_database': os.getenv("PG_DATABASE", "capprdb"),
-    'pg_user': os.getenv("PG_USER", "newera"),
-    'pg_password': os.getenv("PG_PASSWORD", "popuqoow"),
+    'pg_user': os.getenv("PG_USER", "cappr"),
+    'pg_password': os.getenv("PG_PASSWORD", "Scs3JZ3NzXfEBmst"),
     'pg_host': os.getenv("PG_HOST", "localhost"),
     'pg_port': os.getenv("PG_PORT", ""),
-    # For the whole program
     'secret': os.getenv("SECRET_KEY", 'x+m*8luq$kud&gv@n@sf)o_0_+sb92(y&qxk(x&ryii3qc0sv%'),
     'project': "Cappr",
 }
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'CapFinder'
+    'Cappr'
 ]
 
 MIDDLEWARE = [
@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Cappr.urls'
+ROOT_URLCONF = 'Root.urls'
 
 TEMPLATES = [
     {
@@ -77,17 +77,12 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Cappr.wsgi.application'
+WSGI_APPLICATION = 'Root.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# Configured in Specific Settings files.
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
