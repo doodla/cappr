@@ -4,7 +4,13 @@ media/merged.png
 media/resize.png
 media/rotate.png
 media/user.png
+media/user/*
+media/temp/*
 *.pyc
-Cappr/settings/templates
-Cappr/settings/dev-sqlite.py
-Cappr/settings/dev-postgres.py
+Root/settings/dev-sqlite.py
+Root/settings/dev-postgres.py
+Root/settings/templates/
+manage-sqlite.py
+manage-postgres.py
+db.sqlite3
+logs/*

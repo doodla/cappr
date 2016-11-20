@@ -1,67 +1,20 @@
 from __future__ import print_function
 
 import math
-import time
 
-import requests
 from PIL import Image
 
-_url = 'https://api.projectoxford.ai/face/v1.0/detect'
-_key = '88116df7de534533b893886ac1120b26'
-_maxNumRetries = 10
+from .utils import process_request
 
-user_image_path = 'media/user.png'
+url = 'https://api.projectoxford.ai/face/v1.0/detect'
+_key = '88116df7de534533b893886ac1120b26'
+
+
+user_image_path = 'media/user/'
 path_to_cap = 'media/cap.png'
 resize_path = 'media/resize.png'
 rotate_path = 'media/rotate.png'
 merged_path = 'media/merged.png'
-
-
-def process_request(json, data, headers, params):
-    """
-    Helper function to process the request to Project Oxford
-
-    Parameters:
-    json: Used when processing images from its URL. See API Documentation
-    data: Used when processing image read from disk. See API Documentation
-    headers: Used to pass the key information and the data type request
-    """
-
-    retries = 0
-    result = None
-
-    while True:
-
-        response = requests.request('post', _url, json=json, data=data, headers=headers, params=params)
-
-        if response.status_code == 429:
-
-            print("Message: %s" % (response.json()['error']['message']))
-
-            if retries <= _maxNumRetries:
-                time.sleep(1)
-                retries += 1
-                continue
-            else:
-                print('Error: failed after retrying!')
-                break
-
-        elif response.status_code == 200 or response.status_code == 201:
-
-            if 'content-length' in response.headers and int(response.headers['content-length']) == 0:
-                result = None
-            elif 'content-type' in response.headers and isinstance(response.headers['content-type'], str):
-                if 'application/json' in response.headers['content-type'].lower():
-                    result = response.json() if response.content else None
-                elif 'image' in response.headers['content-type'].lower():
-                    result = response.content
-        else:
-            print("Error code: %d" % response.status_code)
-            print("Message: %s" % (response.json()['error']['message']))
-
-        break
-
-    return result
 
 
 def get_angle(x_orig, y_orig, x_landmark, y_landmark):
@@ -104,18 +57,13 @@ def place_image(mx, my):
     background.save(merged_path)
 
 
-def get_merged_image():
-    with open(user_image_path, 'rb') as f:
-        data = f.read()
-
+def get_merged_image(img_data):
     params = {'returnFaceAttributes': 'age,gender',
               'returnFaceLandmarks': 'true'}
 
     headers = {'Ocp-Apim-Subscription-Key': _key, 'Content-Type': 'application/octet-stream'}
 
-    json = None
-
-    result = process_request(json, data, headers, params)
+    result = process_request(headers, params, url, data=img_data)
 
     coordinates = []
     faces_width = []

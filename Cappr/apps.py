@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class CapfinderConfig(AppConfig):
-    name = 'CapFinder'
+    name = 'Cappr'
