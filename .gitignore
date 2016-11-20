@@ -10,7 +10,5 @@ media/temp/*
 Root/settings/dev-sqlite.py
 Root/settings/dev-postgres.py
 Root/settings/templates/
-manage-sqlite.py
-manage-postgres.py
 db.sqlite3
 logs/*
