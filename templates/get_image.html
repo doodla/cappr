@@ -19,7 +19,7 @@
                 <div class="card" style="margin-top: 0">
                     <div class="card-content white-text center">
 
-                        <form id="imageForm" action="{% url 'cappr:view' %}" method="post">
+                        <form id="imageForm" action="{% url 'cappr:result' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" id="imageVal" name="image" value="">
                         </form>

@@ -30,8 +30,8 @@ class Cap(models.Model):
     price = CharField(max_length=255, default="")
     detail = CharField(max_length=255, default="")
     team = CharField(max_length=255, default="", name='team')
-    rgb = models.ForeignKey(RGB, on_delete=models.CASCADE)
-    hex = models.ForeignKey(HEX, on_delete=models.CASCADE)
+    rgb = models.ForeignKey(RGB, on_delete=models.CASCADE, null=True, blank=True)
+    hex = models.ForeignKey(HEX, on_delete=models.CASCADE, null=True, blank=True)
     png = models.ImageField(upload_to='pngs/', null=True, blank=True)
 
     def image_url(self, typeof, direction):
@@ -40,4 +40,8 @@ class Cap(models.Model):
         facing = {'LEFT': '2', 'CENTER': '3', 'RIGHT': '4', 'BACK': '6'}
 
         return 'http://lf.lids.com/hwl?set=sku[' + self.SKU + '],c[' + facing[
-            direction] + '],w[' + options[typeof][1] + '],h[' + options[typeof][0] + ']&load=url[file:product]'
+            direction] + '],w[' + options[typeof][0] + '],h[' + options[typeof][1] + ']&load=url[file:product]'
+
+    @property
+    def cover_img(self):
+        return 'http://lf.lids.com/hwl?set=sku[' + self.SKU + '],c[3],w[400],h[300]&load=url[file:product]'

@@ -1,15 +1,5 @@
 {% extends "layout.html" %}
-{% load static from staticfiles %}
-{% load helper_tags %}
 {% block styles %}
-
-    <style>
-    .modal{
-        width: 80%!important;
-        height:90%!important;
-    }
-
-    </style>
 
 {% endblock %}
 
@@ -23,13 +13,14 @@
                 <div class="col s6 m3">
                     <div class="card hoverable" style="height: 350px">
                         <div class="card-image">
-                            <img src="{{ cap.picture }}">
+                            <img src="{{ cap.cover_img }}">
                         </div>
+                        <div style="display: none">{{ cap.SKU }}</div>
                         <div class="card-content">
                             <p>{{ cap.name }}</p></div>
                         <div class="card-action">
                             <a target="_blank" href="{{ cap.url }}">Buy Now</a>
-                            <a target="_blank" class="right" href="{{ cap.url }}">${{ cap.price|cost_to_usd }}</a>
+                            <a target="_blank" class="right" href="{{ cap.url }}">${{ cap.price }}</a>
                         </div>
                     </div>
                 </div>
@@ -39,31 +30,8 @@
 
     </div>
 
-    <div id="pictureModal" class="modal">
-        <div class="modal-content">
-
-            <img src="/media/merged.png" class="materialboxed" alt="">
-
-        </div>
-    </div>
-
-
 {% endblock %}
 
 {% block scripts %}
 
-    <script>
-
-        $(document).ready(function () {
-            $('.modal').modal();
-
-
-            $(".card-image").click(function () {
-
-                $("#pictureModal").modal('open')
-
-            })
-
-        })
-    </script>
 {% endblock %}

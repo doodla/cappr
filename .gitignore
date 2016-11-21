@@ -6,6 +6,7 @@ media/rotate.png
 media/user.png
 media/user/*
 media/temp/*
+media/pngs/*
 *.pyc
 Root/settings/dev-sqlite.py
 Root/settings/dev-postgres.py
