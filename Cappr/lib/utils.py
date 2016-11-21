@@ -2,16 +2,12 @@ import requests
 from colormath.color_conversions import convert_color
 from colormath.color_diff import delta_e_cie2000
 from colormath.color_objects import sRGBColor, LabColor
+from django.conf import settings
 
 from Cappr.models import Cap
 
-_maxNumRetries = 10
-_key_accent = '00ddd41708ea42b2b6afdc73b574d2d7'
-_url_accent = 'https://api.projectoxford.ai/vision/v1/analyses'
-_url_emotion = 'https://api.projectoxford.ai/emotion/v1.0/recognize'
 
-
-def process_request(headers, params, _url, _json=None, data=None):
+def process_request(headers, params, url, json=None, data=None):
     """
     Parameters:
     json: Used when processing images from its URL. See API Documentation
@@ -21,7 +17,7 @@ def process_request(headers, params, _url, _json=None, data=None):
 
     result = None
 
-    response = requests.post(_url, json=_json, data=data, headers=headers, params=params)
+    response = requests.post(url=url, json=json, data=data, headers=headers, params=params)
 
     if response.status_code == 429:
 
@@ -44,18 +40,28 @@ def process_request(headers, params, _url, _json=None, data=None):
 
 
 def get_accent_color(img_data):
-    params = {'visualFeatures': 'Color,Categories'}
+    """
+    :param img_data: Image Data in Bytes
+    :return: Accent Color of the Image
+    """
+    params = {'visualFeatures': 'Color'}
 
-    headers = {'Ocp-Apim-Subscription-Key': _key_accent, 'Content-Type': 'application/octet-stream'}
+    headers = {'Ocp-Apim-Subscription-Key': settings.API_KEY_VISION, 'Content-Type': 'application/octet-stream'}
 
-    result = process_request(headers, params, _url_accent, data=img_data)
+    result = process_request(headers, params, settings.URL_VISION_API, data=img_data)
 
-    hex_accent_color = '#' + result['color']['accentColor']
+    accent = '#' + result['color']['accentColor']
 
-    return hex_accent_color
+    return accent
 
 
 def get_similarity(accent, dominant):
+    """
+    :param accent: User's Accent Color
+    :param dominant: Cap's Dominant Color
+    :return: Similarity between the two.
+    """
+
     accent_red, accent_green, accent_blue = map(float, accent.split(','))
 
     accent_rgb = sRGBColor(accent_red, accent_green, accent_blue)
@@ -71,15 +77,20 @@ def get_similarity(accent, dominant):
     return delta_e
 
 
-def get_matches(rgb_accent_color):
-    similarity_values = []
+def get_matches(accent, n):
+    """
+    :param accent: User's Accent Color
+    :param n: The number of results to return
+    :return: List of Cap matches sorted by Similarity
+    """
 
+    similarity_values = []
     caps = Cap.objects.all()
     for cap in caps:
-        rgb_dominant_color = cap.rgbDominantColor
-
-        similarity_values.append((cap.id, get_similarity(rgb_accent_color, rgb_dominant_color)))
+        rgb = cap.rgb
+        dominant = rgb.dominant
+        similarity_values.append((cap.SKU, get_similarity(accent, dominant)))
 
     similarity_values.sort(key=lambda tup: tup[1])
 
-    return [x[0] for x in similarity_values]
+    return [x[0] for x in similarity_values[:n]]
