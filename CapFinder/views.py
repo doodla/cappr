@@ -138,11 +138,15 @@ def cappr_upload(request):
     preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(order)])
     caps = Cap.objects.filter(pk__in=order).order_by(preserved)
 
-    cap_list = []
-    for cap in caps:
-
-        if current_emotion in cap.emotion:
-            cap_list.append(cap)
-
     get_merged_image()
-    return render(request, 'cappr_view.html', {'title': 'Cappr', 'caps': cap_list})
+
+    cap_list = []
+
+    if current_emotion is not None:
+        for cap in caps:
+
+            if current_emotion in cap.emotion:
+                cap_list.append(cap)
+        return render(request, 'cappr_view.html', {'title': 'Cappr', 'caps': cap_list})
+    else:
+        return render(request, 'cappr_view.html', {'title': 'Cappr', 'caps': caps})

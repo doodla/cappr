@@ -11,8 +11,8 @@ from colormath.color_objects import sRGBColor, LabColor
 from CapFinder.models import Cap
 
 _maxNumRetries = 10
-_key_accent = '00ddd41708ea42b2b6afdc73b574d2d7'
-_url_accent = 'https://api.projectoxford.ai/vision/v1/analyses'
+_key_accent = '112f5487fd5c465a82a0256e0d7a175d'
+_url_accent = 'https://api.projectoxford.ai/vision/v1.0/analyze'
 _url_emotion = 'https://api.projectoxford.ai/emotion/v1.0/recognize'
 _key_emotion = '36c531a3defc46c38518eec7da08488e'
 
@@ -95,9 +95,8 @@ def upload_to_imgur(imgData):
     return data['link']
 
 
-def get_accent_color_and_emotion(imgur_link,file=None):
+def get_accent_color_and_emotion(imgur_link, file=None):
     params = {'visualFeatures': 'Color,Categories'}
-
 
     if file is None:
         headers = {'Ocp-Apim-Subscription-Key': _key_accent, 'Content-Type': 'application/json'}
@@ -116,9 +115,12 @@ def get_accent_color_and_emotion(imgur_link,file=None):
 
     result = process_request(json, data, headers, params, _url_emotion)
 
-    for currFace in result:
-        current_emotion = max(currFace['scores'].items(), key=operator.itemgetter(1))[0]
-        return hex_accent_color, current_emotion
+    if result is not None:
+        for currFace in result:
+            current_emotion = max(currFace['scores'].items(), key=operator.itemgetter(1))[0]
+            return hex_accent_color, current_emotion
+    else:
+        return hex_accent_color, None
 
 
 def get_similarity(accent, dominant):
