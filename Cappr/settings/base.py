@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'CapFinder'
+    'CapFinder',
+    'analytical',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,5 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-91117338-3'

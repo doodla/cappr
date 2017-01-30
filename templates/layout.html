@@ -1,3 +1,5 @@
+{% load static %}
+{% load google_analytics %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- End of Required Meta Tags -->
-    {% load static from staticfiles %}
 
     <!-- Start of Meta Tags -->
     <title>New Era Caps</title>
@@ -22,13 +23,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     {% block styles %}{% endblock %}
     <!-- End of Styling -->
+    {% google_analytics %}
 </head>
 <body>
 <div class="row">
     <div class="navbar-fixed">
         <nav class="white black-text">
             <div class="nav-wrapper black-text">
-                <a href="#" class="brand-logo center black-text">{{title}}</a>
+                <a href="#" class="brand-logo center black-text">{{ title }}</a>
                 <ul class="left">
                     <li>
                         <a class="black-text on-hover-inherit" href="{% url 'cappr:index' %}">
