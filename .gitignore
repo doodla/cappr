@@ -8,3 +8,4 @@ media/user.png
 Cappr/settings/templates
 Cappr/settings/dev-sqlite.py
 Cappr/settings/dev-postgres.py
+Cappr/settings/development.py
